@@ -1,6 +1,10 @@
 
 package library.system;
 
+import com.sun.glass.events.KeyEvent;
+import java.awt.Color;
+import java.awt.Cursor;
+
 public class Login_Form extends javax.swing.JFrame {
 
     /**
@@ -19,9 +23,14 @@ public class Login_Form extends javax.swing.JFrame {
         btn_login = new javax.swing.JButton();
         username = new javax.swing.JTextField();
         password = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        btn_create = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 0, 51));
+        setForeground(java.awt.Color.black);
         setLocation(new java.awt.Point(750, 250));
+        setUndecorated(true);
         setResizable(false);
 
         jLabel1.setText("Username");
@@ -32,6 +41,34 @@ public class Login_Form extends javax.swing.JFrame {
         btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_loginActionPerformed(evt);
+            }
+        });
+
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tekton Pro Ext", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel3.setText("X");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel3MouseExited(evt);
+            }
+        });
+
+        btn_create.setText("Create Account");
+        btn_create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_createActionPerformed(evt);
             }
         });
 
@@ -51,12 +88,18 @@ public class Login_Form extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(btn_login)))
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(btn_create)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(121, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -65,7 +108,9 @@ public class Login_Form extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addComponent(btn_login)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_login)
+                    .addComponent(btn_create))
                 .addGap(95, 95, 95))
         );
 
@@ -85,6 +130,39 @@ public class Login_Form extends javax.swing.JFrame {
           this.dispose();
       }
     }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
+        jLabel3.setForeground(Color.green);
+        jLabel3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR) );
+    }//GEN-LAST:event_jLabel3MouseEntered
+
+    private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
+       jLabel3.setForeground(Color.red);
+    }//GEN-LAST:event_jLabel3MouseExited
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+             dbconnect connection= new dbconnect();
+      String pw=connection.getdata(username.getText());
+      String pwinput=String.valueOf(password.getPassword());
+      if(pwinput.equals(pw)){
+          System.out.println("Match");
+          login_success log=new login_success();
+          log.setVisible(true);
+          this.dispose();
+      }
+        }
+    }//GEN-LAST:event_passwordKeyPressed
+
+    private void btn_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_createActionPerformed
+        create_login loging=new create_login();
+          loging.setVisible(true);
+          this.dispose(); // TODO add your handling code here:
+    }//GEN-LAST:event_btn_createActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,9 +202,11 @@ public class Login_Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_create;
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
